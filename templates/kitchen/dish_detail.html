@@ -1,0 +1,28 @@
+{% extends "layouts/../layouts/base.html" %}
+{% block content %}
+  <h1>
+    {{ dish.name }}
+    <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+    <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <p>Dish Type: ({{ dish.dish_type.name }})</p>
+  <h1>Cooks</h1>
+  <hr>
+  <ul>
+    {% for cook in dish.cooks.all %}
+      <li>Username: {{ cook.username }} </li>
+      <li>Full name: {{ cook.first_name }} {{ cook.last_name }}</li>
+      <li>Years of experience: {{ cook.years_of_experience }}</li>
+    {% endfor %}
+  </ul>
+  <form method="post" action="{% url 'kitchen:dish-assign' pk=dish.id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-warning">{% if user in dish.cooks.all %} Delete me from this dish {% else %}
+      Assign me to this dish {% endif %}
+    </button>
+  </form>
+{% endblock %}

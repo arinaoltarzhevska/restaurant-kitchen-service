@@ -1,0 +1,38 @@
+{% extends "layouts/../layouts/base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <header class="header-2">
+    <div class="page-header min-vh-70 relative"
+         style="background-image: url('https://www.southernliving.com/thmb/TiGXc2JsEJpsioS_TA-LDzRFPEc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/27531_ST_TENDERLOINS_13-7442687e434e4c4c95609ff0262773a2.jpg')">
+      <span class="mask bg-gradient-primary opacity-4"></span>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 text-center mx-auto">
+            <h1 class="text-white pt-3 mt-n5">Dish list</h1>
+            <a href="{% url 'kitchen:dish-create' %}" class="btn btn-primary link-to-page">
+              Create New Dish
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </header>
+  <form method="get" action="" class="form-inline">
+    {{ search_form|crispy }}
+    <input class="btn btn-secondary" type="submit" value="🔎">
+  </form>
+  {% if dish_list %}
+    <ul>
+      {% for dish in dish_list %}
+        <li>
+          <a href="{% url "kitchen:dish-detail" pk=dish.id %} ">{{ dish.name }}</a>
+           ({{ dish.dish_type.name }})
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no dishes in restaurant</p>
+  {% endif %}
+{% endblock %}
