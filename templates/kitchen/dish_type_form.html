@@ -1,0 +1,21 @@
+{% extends "layouts/../layouts/base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="page-header min-vh-100 relative" style="background-color: #c3c3c3">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 text-center mx-auto">
+          <h1>{{ object|yesno:"Update,Create"}} dish type {{ dish_type.name }}</h1>
+          <form action="" method="post" novalidate class="d-flex justify-content-center align-items-center">
+            {% csrf_token %}
+            <div class="form-group mb-0">
+              {{ form|crispy }}
+            </div>
+            <input type="submit" value="Submit" class="btn btn-primary ms-3">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
